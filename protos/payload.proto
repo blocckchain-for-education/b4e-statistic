@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+
+message B4EPayload{
+
+  enum Action {
+    CREATE_MINISTRY = 0;
+    CREATE_INSTITUTION = 1;
+    CREATE_TEACHER = 2;
+    CREATE_EDU_OFFICER = 3;
+    CREATE_VOTE = 4;
+    CREATE_CLASS = 5;
+    CREATE_RECORD = 6;
+    UPDATE_RECORD = 7;
+    UPDATE_ACTOR_INFO = 8;
+    SET_B4E_ENVIRONMENT = 9;
+  }
+
+  Action action = 1;
+
+  CreateInstitutionAction create_institution = 2;
+  CreateTeacherAction create_teacher = 3;
+  CreateEduOfficerAction create_edu_officer = 4;
+  CreateVoteAction create_vote = 5;
+  CreateClassAction create_class = 6;
+  CreateRecordAction create_record = 7;
+  UpdateRecordAction update_record = 8;
+  UpdateActorInfoAction update_actor_info = 9;
+  SetB4EEnvironmentAction set_b4e_environment = 10;
+
+  uint64 timestamp = 11;
+}
+
+
+message Info{
+  string data = 1;
+}
+
+enum RecordType{
+  SUBJECT = 0;
+  CERTIFICATE = 1;
+}
+
+
+message CreateInstitutionAction {
+  string id = 1;
+  Info info = 3;
+}
+
+message CreateTeacherAction {
+  string id = 1;
+  string teacher_public_key = 2;
+  Info info = 4;
+}
+message CreateEduOfficerAction {
+  string id = 1;
+  string edu_officer_public_key = 2;
+  Info info = 4;
+}
+
+message CreateVoteAction {
+  string issuer_public_key = 1;
+  string elector_public_key = 2;
+  bool accepted = 3;
+}
+message CreateClassAction{
+  string class_id = 1;
+  string teacher_public_key = 2;
+  string edu_officer_public_key = 3;
+  uint64 timestamp = 4;
+}
+message CreateRecordAction {
+  string owner_public_key = 1;
+  string manager_public_key = 2;
+  string issuer_public_key = 3;
+  string record_id = 4;
+  RecordType record_type = 5;
+  string record_data = 6;
+}
+
+message UpdateRecordAction {
+  string owner_public_key = 1;
+  string manager_public_key = 2;
+  string record_id = 3;
+  string record_data = 4;
+  bool active = 5;
+}
+
+message UpdateActorInfoAction {
+  Info info = 3;
+}
+
+message SetB4EEnvironmentAction{
+  uint64 timestamp = 1;
+}
+
+
